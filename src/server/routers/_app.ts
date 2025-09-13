@@ -2,11 +2,7 @@ import { TLEditorSnapshot } from "@tldraw/tldraw";
 import { router, publicProcedure } from "../trpc";
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
-
-interface IDocument {
-    documentId: string
-    documentData: TLEditorSnapshot | undefined
-}
+import { IDocument } from "@/types/trpc";
 
 const documents = new Map<string, IDocument>();
 
@@ -36,8 +32,13 @@ export const appRouter = router({
   }
     }),
     getAllDocuments: publicProcedure.query(() => {
-    const allDocs = Array.from(documents.values());
-    return allDocs;
+      const  docs = Array.from(documents.keys()).map((documentId) => {
+        return({
+          documentId: documentId,
+          documentData: documents.get(documentId)
+        })
+      })
+      return(docs)
   }),
 });
 

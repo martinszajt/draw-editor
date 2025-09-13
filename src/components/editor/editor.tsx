@@ -3,22 +3,21 @@
 import { Editor, getSnapshot, loadSnapshot, Tldraw, createTLStore, TLStoreSnapshot } from "@tldraw/tldraw";
 import 'tldraw/tldraw.css'
 import { useCallback, useState } from "react";
+import { IDocument } from "@/types/trpc";
 
 export interface EditorComponentProps {
-  documentData?: {
-    documentData?: TLStoreSnapshot;
-  };
+  document?: IDocument
   saveDocumentData: (snapshot: TLStoreSnapshot) => Promise<boolean>;
 }
 
-export default function EditorComponent({ documentData, saveDocumentData }: EditorComponentProps) {
+export default function EditorComponent({ document, saveDocumentData }: EditorComponentProps) {
   const [editor, setEditor] = useState<Editor>();
   
   const [store] = useState(() => {
     const newStore = createTLStore();
 
-    if (documentData?.documentData) {
-      const snapshot = documentData.documentData;
+    if (document?.documentData) {
+      const snapshot = document.documentData;
       console.log('Applying snapshot', snapshot);
       loadSnapshot(newStore, snapshot);
     } else {

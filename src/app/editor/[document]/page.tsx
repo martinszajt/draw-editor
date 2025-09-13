@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { trpc } from "../../../utils/trpc";
 import EditorComponent, { EditorComponentProps } from "@/components/editor/editor";
 import { TLStoreSnapshot } from "@tldraw/tldraw";
+import { IDocument } from "@/types/trpc";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,7 +20,7 @@ export default function Home() {
   const getDocumentDataQuery = trpc.getDocumentData.useQuery({ documentId: "doc" });
   const storeDocumentMutation = trpc.storeDocumentData.useMutation();
 
-  const documentData = getDocumentDataQuery.data as { documentData?: TLStoreSnapshot } | undefined;
+  const document = getDocumentDataQuery.data as IDocument | undefined;
 
   if (getDocumentDataQuery.isLoading) return <div>Loading...</div>;
   if (getDocumentDataQuery.isError) return <div>Error: {getDocumentDataQuery.error.message}</div>;
@@ -39,7 +40,7 @@ export default function Home() {
     <div className={`${geistSans.className} ${geistMono.className} font-sans`}>
       <main>
         <EditorComponent 
-          documentData={documentData} 
+          document={document} 
           saveDocumentData={saveDoc} 
         />
       </main>
