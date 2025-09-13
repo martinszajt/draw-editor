@@ -1,14 +1,13 @@
-import { useState } from "react";
-import type { AppType } from "next/app";
-import { trpc } from "@/utils/trpc"
+'use client'
+
+import { ReactNode, useState } from "react";
+import { trpc } from "@/utils/trpc";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink } from "@trpc/client";
-
 import "../styles/globals.css";
 
-const MyApp: AppType = ({ Component, pageProps }) => {
+export default function RootLayout({ children }: { children: ReactNode }) {
   const [queryClient] = useState(() => new QueryClient());
-
   const [trpcClient] = useState(() =>
     trpc.createClient({
       links: [
@@ -22,10 +21,10 @@ const MyApp: AppType = ({ Component, pageProps }) => {
   return (
     <trpc.Provider client={trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>
-        <Component {...pageProps} />
+        <html lang="en">
+          <body>{children}</body>
+        </html>
       </QueryClientProvider>
     </trpc.Provider>
   );
-};
-
-export default MyApp;
+}

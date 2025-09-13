@@ -1,3 +1,5 @@
+'use client'
+
 import { Geist, Geist_Mono } from "next/font/google";
 import { trpc } from "../../../utils/trpc";
 import EditorComponent, { EditorComponentProps } from "@/components/editor/editor";
