@@ -16,8 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export default function Home() {
-  const getDocumentDataQuery = trpc.getDocumentData.useQuery<any>({ documentId: "doc" });
-
+  const getDocumentDataQuery = trpc.getDocumentData.useQuery({ documentId: "doc" });
   const storeDocumentMutation = trpc.storeDocumentData.useMutation();
 
   const documentData = getDocumentDataQuery.data as { documentData?: TLStoreSnapshot } | undefined;

@@ -14,14 +14,14 @@ export const appRouter = router({
   getDocumentData: publicProcedure
     .input(z.object({ documentId: z.string() }))
     .query(({ input }) => {
-      let doc = documents.get(input.documentId);
+      const doc = documents.get(input.documentId);
     return {
         documentData: doc ?? null,
         documentId: doc?.documentId ?? input.documentId,
         error: doc ? null : 'Document not found',
     };
     }),
-      storeDocumentData: publicProcedure
+  storeDocumentData: publicProcedure
     .input(z.object({ snapshot: z.any(), documentId: z.string() }))
     .mutation(async ({ input }) => {
   if (documents.has(input.documentId)) {
@@ -35,6 +35,10 @@ export const appRouter = router({
     console.log('document', documents)
   }
     }),
+    getAllDocuments: publicProcedure.query(() => {
+    const allDocs = Array.from(documents.values());
+    return allDocs;
+  }),
 });
 
 export type AppRouter = typeof appRouter;
