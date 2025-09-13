@@ -1,20 +1,39 @@
 import { TLEditorSnapshot } from "@tldraw/tldraw";
 import { router, publicProcedure } from "../trpc";
 import { z } from "zod";
+import { TRPCError } from "@trpc/server";
 
-var document: TLEditorSnapshot | undefined = undefined
+interface IDocument {
+    documentId: string
+    documentData: TLEditorSnapshot | undefined
+}
+
+const documents = new Map<string, IDocument>();
 
 export const appRouter = router({
   getDocumentData: publicProcedure
-    .input(z.object({ name: z.string().optional() }))
+    .input(z.object({ documentId: z.string() }))
     .query(({ input }) => {
-      return { documentData: document };
+      let doc = documents.get(input.documentId);
+    return {
+        documentData: doc ?? null,
+        documentId: doc?.documentId ?? input.documentId,
+        error: doc ? null : 'Document not found',
+    };
     }),
       storeDocumentData: publicProcedure
-    .input(z.object({ snapshot: z.any() }))
+    .input(z.object({ snapshot: z.any(), documentId: z.string() }))
     .mutation(async ({ input }) => {
-      document = input.snapshot
-      return { success: true };
+  if (documents.has(input.documentId)) {
+    const existing = documents.get(input.documentId)!;
+    existing.documentData = input.snapshot;
+    documents.set(existing.documentId, existing);
+  } else {
+    console.log('creating new', input.documentId)
+    console.log('with snap', input.snapshot)
+    documents.set(input.documentId, input.snapshot);
+    console.log('document', documents)
+  }
     }),
 });
 

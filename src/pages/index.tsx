@@ -14,33 +14,12 @@ const geistMono = Geist_Mono({
 });
 
 export default function Home() {
-  const getDocumentDataQuery = trpc.getDocumentData.useQuery<any>({ name: "doc" });
 
-  const storeDocumentMutation = trpc.storeDocumentData.useMutation();
-
-  const documentData = getDocumentDataQuery.data as { documentData?: TLStoreSnapshot } | undefined;
-
-  if (getDocumentDataQuery.isLoading) return <div>Loading...</div>;
-  if (getDocumentDataQuery.isError) return <div>Error: {getDocumentDataQuery.error.message}</div>;
-
-  const saveDoc: EditorComponentProps['saveDocumentData'] = async (snapshot) => {
-    try {
-      console.log('Saving snapshot:', snapshot);
-      await storeDocumentMutation.mutateAsync({ snapshot });
-      return true;
-    } catch (error) {
-      console.error("Error saving document:", error);
-      return false;
-    }
-  };
 
   return (
     <div className={`${geistSans.className} ${geistMono.className} font-sans`}>
       <main>
-        <EditorComponent 
-          documentData={documentData} 
-          saveDocumentData={saveDoc} 
-        />
+
       </main>
     </div>
   );
