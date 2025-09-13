@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Geist, Geist_Mono } from "next/font/google";
+import { trpc } from "../utils/trpc";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -12,6 +13,12 @@ const geistMono = Geist_Mono({
 });
 
 export default function Home() {
+
+  const getDocumentDataQuery = trpc.getDocumentData.useQuery({ name: "doc" });
+
+  if (getDocumentDataQuery.isLoading) return <div>Loading...</div>;
+  if (getDocumentDataQuery.isError) return <div>Error: {getDocumentDataQuery.error.message}</div>;
+
   return (
     <div
       className={`${geistSans.className} ${geistMono.className} font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20`}
