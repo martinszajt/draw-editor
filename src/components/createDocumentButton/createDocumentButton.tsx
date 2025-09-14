@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button"
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogClose,
@@ -7,11 +7,11 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { FilePlus2 } from "lucide-react"
-import { useState } from "react"
+} from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { FilePlus2 } from 'lucide-react';
+import { useState } from 'react';
 
 const routeRegex = /^[a-zA-Z0-9-_]+$/;
 
@@ -21,9 +21,8 @@ export function CreateDocumentButton() {
 
   const handleFileNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
-          setFileName(newValue);
-    if (routeRegex.test(newValue) || newValue === "") {
-
+    setFileName(newValue);
+    if (routeRegex.test(newValue) || newValue === '') {
       setIsValid(true);
     } else {
       setIsValid(false);
@@ -33,7 +32,9 @@ export function CreateDocumentButton() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">New File <FilePlus2 /></Button>
+        <Button variant="outline">
+          New File <FilePlus2 />
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
@@ -51,9 +52,7 @@ export function CreateDocumentButton() {
               onChange={handleFileNameChange}
               aria-invalid={!isValid}
             />
-            {!isValid && (
-              <p className="text-red-500 text-sm mt-1">Invalid file name.</p>
-            )}
+            {!isValid && <p className="text-red-500 text-sm mt-1">Invalid file name.</p>}
           </div>
         </div>
         <DialogFooter className="sm:justify-start">

@@ -1,14 +1,11 @@
-'use client'
-import { trpc } from "../../../utils/trpc";
-import EditorComponent, { EditorComponentProps } from "@/components/editor/editor";
-import { IDocument } from "@/types/trpc";
-import { useParams } from "next/navigation";
-
-
+'use client';
+import { trpc } from '../../../utils/trpc';
+import EditorComponent, { EditorComponentProps } from '@/components/editor/editor';
+import { IDocument } from '@/types/trpc';
+import { useParams } from 'next/navigation';
 
 export default function Home() {
-
-      const { documentId } = useParams<{ documentId: string }>();;
+  const { documentId } = useParams<{ documentId: string }>();
   const getDocumentDataQuery = trpc.getDocumentData.useQuery({ documentId: documentId });
   const storeDocumentMutation = trpc.storeDocumentData.useMutation();
 
@@ -23,7 +20,7 @@ export default function Home() {
       await storeDocumentMutation.mutateAsync({ snapshot, documentId: documentId });
       return true;
     } catch (error) {
-      console.error("Error saving document:", error);
+      console.error('Error saving document:', error);
       return false;
     }
   };
@@ -31,10 +28,7 @@ export default function Home() {
   return (
     <div>
       <main>
-        <EditorComponent 
-          document={document} 
-          saveDocumentData={saveDoc} 
-        />
+        <EditorComponent document={document} saveDocumentData={saveDoc} />
       </main>
     </div>
   );
