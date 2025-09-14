@@ -1,23 +1,15 @@
 'use client'
-
-import { Geist, Geist_Mono } from "next/font/google";
 import { trpc } from "../../../utils/trpc";
 import EditorComponent, { EditorComponentProps } from "@/components/editor/editor";
-import { TLStoreSnapshot } from "@tldraw/tldraw";
 import { IDocument } from "@/types/trpc";
+import { useParams } from "next/navigation";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export default function Home() {
-  const getDocumentDataQuery = trpc.getDocumentData.useQuery({ documentId: "doc" });
+
+      const { documentId } = useParams<{ documentId: string }>();;
+  const getDocumentDataQuery = trpc.getDocumentData.useQuery({ documentId: documentId });
   const storeDocumentMutation = trpc.storeDocumentData.useMutation();
 
   const document = getDocumentDataQuery.data as IDocument | undefined;
@@ -28,7 +20,7 @@ export default function Home() {
   const saveDoc: EditorComponentProps['saveDocumentData'] = async (snapshot) => {
     try {
       console.log('Saving snapshot:', snapshot);
-      await storeDocumentMutation.mutateAsync({ snapshot, documentId: 'doc' });
+      await storeDocumentMutation.mutateAsync({ snapshot, documentId: documentId });
       return true;
     } catch (error) {
       console.error("Error saving document:", error);
@@ -37,7 +29,7 @@ export default function Home() {
   };
 
   return (
-    <div className={`${geistSans.className} ${geistMono.className} font-sans`}>
+    <div>
       <main>
         <EditorComponent 
           document={document} 

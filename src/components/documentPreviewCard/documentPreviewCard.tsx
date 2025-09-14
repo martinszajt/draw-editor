@@ -17,17 +17,13 @@ export interface DocumentPreviewCardProps {
 }
 
 export default function DocumentPreviewCard({ document }: DocumentPreviewCardProps) {
-
-
   return (
-    <>
-<Card>
+<Card className="mb-4">
   <CardContent>
     <CardTitle>{document.documentId}</CardTitle>
     <CardDescription>Card Description</CardDescription>
-    <CardAction><Link href={`/${document.documentId}`}>Edit</Link></CardAction>
+    <CardAction><Link target={'_blank'} href={`/editor/${document.documentId}`}>Edit</Link></CardAction>
   </CardContent>
 </Card>
-    </>
   );
 }
