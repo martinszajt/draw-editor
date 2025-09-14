@@ -4,7 +4,7 @@ import { IDocument } from '@/types/trpc';
 export const useAllDocuments = () => {
   const getAllDocumentsQuery = trpc.getAllDocuments.useQuery();
 
-  const documents = getAllDocumentsQuery.data as IDocument[] | [];
+  const documents = getAllDocumentsQuery.data as IDocument[] | undefined;
 
   return {
     documents,
@@ -12,4 +12,4 @@ export const useAllDocuments = () => {
     isError: getAllDocumentsQuery.isError,
     error: getAllDocumentsQuery.error,
   };
-}
+};

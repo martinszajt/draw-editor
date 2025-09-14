@@ -1,6 +1,7 @@
 'use client';
 import { EditorComponent } from '@/components/editor/editor';
 import { EmptyDocumentWarning } from '@/components/emptyDocumentWarning/emptyDocumentWarning';
+import { LoadingSpinner } from '@/components/loadingSpinner/emptyDocumentWarning';
 import { useDocument } from '@/hooks/useSingleDocument';
 import { useStoreDocument } from '@/hooks/useStoreDocument';
 import { useParams } from 'next/navigation';
@@ -12,7 +13,7 @@ const Editor = () => {
 
   const { storeDocument } = useStoreDocument();
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <LoadingSpinner />;
 
   return (
     <main>
@@ -23,6 +24,6 @@ const Editor = () => {
       )}
     </main>
   );
-}
+};
 
-export default Editor
+export default Editor;

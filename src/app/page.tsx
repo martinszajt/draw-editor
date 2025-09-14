@@ -9,8 +9,6 @@ const Home = () => {
   const allDocuments = useAllDocuments();
   const storeDocument = useStoreDocument();
 
-  if (allDocuments.isLoading || storeDocument.isLoading) return <div>Loading...</div>;
-
   return (
     <main>
       <CreateDocumentDialog onCreateDocument={storeDocument.createNewDocument} />
@@ -22,6 +20,6 @@ const Home = () => {
       </div>
     </main>
   );
-}
+};
 
-export default Home
+export default Home;

@@ -12,4 +12,4 @@ export const useDocument = (documentId: string) => {
     isLoading: getDocumentQuery.isLoading,
     error: getDocumentQuery.error,
   };
-}
+};

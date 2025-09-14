@@ -39,4 +39,4 @@ export const useStoreDocument = () => {
     storeDocument,
     createNewDocument,
   };
-}
+};

@@ -60,4 +60,4 @@ export const EditorComponent = ({ document, storeDocument }: EditorComponentProp
       </div>
     </>
   );
-}
+};

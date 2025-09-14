@@ -7,7 +7,7 @@ const documents = new Map<string, snapshotType | null>();
 
 export const appRouter = router({
   getDocument: publicProcedure.input(z.object({ documentId: z.string() })).query(({ input }) => {
-    if(!input.documentId){
+    if (!input.documentId) {
       throw new TRPCError({
         code: 'BAD_REQUEST',
         message: `Invalid Document ID`,
@@ -34,12 +34,12 @@ export const appRouter = router({
   createDocument: publicProcedure
     .input(z.object({ documentId: z.string() }))
     .mutation(async ({ input }) => {
-          if(!input.documentId){
-      throw new TRPCError({
-        code: 'BAD_REQUEST',
-        message: `Invalid Document ID`,
-      });
-    }
+      if (!input.documentId) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: `Invalid Document ID`,
+        });
+      }
       if (!documents.has(input.documentId)) {
         documents.set(input.documentId, null);
       } else {
