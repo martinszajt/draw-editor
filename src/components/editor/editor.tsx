@@ -13,6 +13,7 @@ import { useCallback, useState } from 'react';
 import { IDocument } from '@/types/trpc';
 import { DocumentHeader } from './documentHeader/documentHeader';
 import { useRouter } from 'next/navigation';
+import { routes } from '@/utils/routes';
 
 export interface EditorComponentProps {
   document: IDocument;
@@ -37,7 +38,7 @@ export const EditorComponent = ({ document, storeDocument }: EditorComponentProp
   }, []);
 
   const backToHome = () => {
-    router.push('/');
+    router.push(routes.home);
   };
 
   const handleSaveDocument = async () => {
