@@ -21,13 +21,13 @@ import { House, Save } from 'lucide-react';
 
 export interface EditorComponentProps {
   document?: IDocument;
-  saveDocumentData: () => void;
+  onSaveSnapshot: () => void;
   backToHome: () => void;
 }
 
 export default function DocumentHeader({
   document,
-  saveDocumentData,
+  onSaveSnapshot,
   backToHome,
 }: EditorComponentProps) {
   return (
@@ -44,7 +44,7 @@ export default function DocumentHeader({
           All Files
         </Button>
 
-        <Button variant="secondary" onClick={saveDocumentData}>
+        <Button variant="secondary" onClick={onSaveSnapshot}>
           <Save />
           Save File
         </Button>

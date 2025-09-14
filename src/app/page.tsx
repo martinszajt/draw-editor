@@ -1,9 +1,9 @@
 'use client';
 import { Geist, Geist_Mono } from 'next/font/google';
-import { trpc } from '../utils/trpc';
 import DocumentPreviewCard from '@/components/documentPreviewCard/documentPreviewCard';
 import { IDocument } from '@/types/trpc';
 import { CreateDocumentButton } from '@/components/createDocumentButton/createDocumentButton';
+import { useAllDocuments } from '@/hooks/useAllDocuments';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -16,19 +16,18 @@ const geistMono = Geist_Mono({
 });
 
 export default function Home() {
-  const getAllDocumentsQuery = trpc.getAllDocuments.useQuery();
-  const allDocuments = getAllDocumentsQuery.data as IDocument[] | [];
+  const { documents, isLoading, isError, error } = useAllDocuments();
 
-  if (getAllDocumentsQuery.isLoading) return <div>Loading...</div>;
-  if (getAllDocumentsQuery.isError) return <div>Error: {getAllDocumentsQuery.error.message}</div>;
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error: {error?.message}</div>;
   return (
     <div
       className={`${geistSans.className} ${geistMono.className} font-sans min-h-screen items-center p-6`}
     >
       <main>
         <div className="flex flex-col p-4 mb-4">
-          {allDocuments &&
-            allDocuments.map((document: IDocument) => {
+          {documents &&
+            documents.map((document: IDocument) => {
               return <DocumentPreviewCard key={document.documentId} document={document} />;
             })}
 

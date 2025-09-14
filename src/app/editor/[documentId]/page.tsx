@@ -1,34 +1,27 @@
 'use client';
 import { trpc } from '../../../utils/trpc';
 import EditorComponent, { EditorComponentProps } from '@/components/editor/editor';
+import { useDocument } from '@/hooks/useSingleDocument';
+import { useStoreDocument } from '@/hooks/useStoreDocument';
 import { IDocument } from '@/types/trpc';
 import { useParams } from 'next/navigation';
 
 export default function Home() {
   const { documentId } = useParams<{ documentId: string }>();
-  const getDocumentDataQuery = trpc.getDocumentData.useQuery({ documentId: documentId });
-  const storeDocumentMutation = trpc.storeDocumentData.useMutation();
 
-  const document = getDocumentDataQuery.data as IDocument | undefined;
+  const { document, isLoading, isError, error } = useDocument(documentId);
 
-  if (getDocumentDataQuery.isLoading) return <div>Loading...</div>;
-  if (getDocumentDataQuery.isError) return <div>Error: {getDocumentDataQuery.error.message}</div>;
+  const { storeDocument } = useStoreDocument();
 
-  const saveDoc: EditorComponentProps['saveDocumentData'] = async (snapshot) => {
-    try {
-      console.log('Saving snapshot:', snapshot);
-      await storeDocumentMutation.mutateAsync({ snapshot, documentId: documentId });
-      return true;
-    } catch (error) {
-      console.error('Error saving document:', error);
-      return false;
-    }
-  };
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error: {error?.message}</div>;
+
+  console.log('document', document)
 
   return (
     <div>
       <main>
-        <EditorComponent document={document} saveDocumentData={saveDoc} />
+        {document && <EditorComponent document={document} storeDocument={storeDocument} />}
       </main>
     </div>
   );
