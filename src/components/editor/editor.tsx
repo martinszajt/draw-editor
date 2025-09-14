@@ -11,7 +11,7 @@ import {
 import 'tldraw/tldraw.css';
 import { useCallback, useState } from 'react';
 import { IDocument } from '@/types/trpc';
-import DocumentHeader from './documentHeader/documentHeader';
+import { DocumentHeader } from './documentHeader/documentHeader';
 import { useRouter } from 'next/navigation';
 
 export interface EditorComponentProps {
@@ -19,7 +19,7 @@ export interface EditorComponentProps {
   storeDocument: (document: IDocument) => Promise<boolean>;
 }
 
-export default function EditorComponent({ document, storeDocument }: EditorComponentProps) {
+export const EditorComponent = ({ document, storeDocument }: EditorComponentProps) => {
   const [editor, setEditor] = useState<Editor>();
   const router = useRouter();
 
@@ -28,8 +28,6 @@ export default function EditorComponent({ document, storeDocument }: EditorCompo
     if (document?.snapshot) {
       const snapshot = document.snapshot;
       loadSnapshot(newStore, snapshot);
-    } else {
-      console.log('No snapshot to apply');
     }
     return newStore;
   });

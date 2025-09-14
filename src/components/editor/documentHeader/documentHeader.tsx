@@ -1,22 +1,8 @@
 'use client';
 
-import {
-  Editor,
-  getSnapshot,
-  loadSnapshot,
-  Tldraw,
-  createTLStore,
-  TLStoreSnapshot,
-  TLUiOverrides,
-  TLUiActionItem,
-  TLUiActionsContextType,
-  TLComponents,
-} from '@tldraw/tldraw';
-import 'tldraw/tldraw.css';
-import { useCallback, useState } from 'react';
 import { IDocument } from '@/types/trpc';
 import { Button } from '@/components/ui/button';
-import { toast, Toaster } from 'sonner';
+import { Toaster } from 'sonner';
 import { House, Save } from 'lucide-react';
 
 export interface EditorComponentProps {
@@ -25,11 +11,11 @@ export interface EditorComponentProps {
   backToHome: () => void;
 }
 
-export default function DocumentHeader({
+export const DocumentHeader =({
   document,
   onSaveSnapshot,
   backToHome,
-}: EditorComponentProps) {
+}: EditorComponentProps) => {
   return (
     <div className="z-100 fixed w-full flex items-center justify-center">
       <div

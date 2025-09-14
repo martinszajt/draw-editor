@@ -19,7 +19,7 @@ export interface EditorComponentProps {
   onCreateDocument: (documentId: string) => Promise<boolean>;
 }
 
-export function CreateDocumentButton({ onCreateDocument }: EditorComponentProps) {
+export function CreateDocumentDialog({ onCreateDocument }: EditorComponentProps) {
   const [fileName, setFileName] = useState<string>('');
   const [isValid, setIsValid] = useState<boolean>(true);
 

@@ -3,16 +3,28 @@ import { router, publicProcedure } from '../trpc';
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
-const documents = new Map<string, snapshotType>();
+const documents = new Map<string, snapshotType | null>();
 
 export const appRouter = router({
   getDocument: publicProcedure.input(z.object({ documentId: z.string() })).query(({ input }) => {
-    const doc = documents.get(input.documentId);
-    return {
-      snapshot: doc ?? null,
-      documentId: input.documentId,
-      error: doc ? null : 'Document not found',
-    };
+    if(!input.documentId){
+      throw new TRPCError({
+        code: 'BAD_REQUEST',
+        message: `Invalid Document ID`,
+      });
+    }
+    if (documents.has(input.documentId)) {
+      const document = documents.get(input.documentId);
+      return {
+        snapshot: document,
+        documentId: input.documentId,
+      };
+    } else {
+      throw new TRPCError({
+        code: 'NOT_FOUND',
+        message: `Document not found`,
+      });
+    }
   }),
   storeDocument: publicProcedure
     .input(z.object({ snapshot: z.any(), documentId: z.string() }))
@@ -22,12 +34,18 @@ export const appRouter = router({
   createDocument: publicProcedure
     .input(z.object({ documentId: z.string() }))
     .mutation(async ({ input }) => {
+          if(!input.documentId){
+      throw new TRPCError({
+        code: 'BAD_REQUEST',
+        message: `Invalid Document ID`,
+      });
+    }
       if (!documents.has(input.documentId)) {
-        documents.set(input.documentId, {});
+        documents.set(input.documentId, null);
       } else {
         throw new TRPCError({
           code: 'BAD_REQUEST',
-          message: `ALREADY EXIST`,
+          message: `Document already exist`,
         });
       }
     }),

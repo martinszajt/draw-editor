@@ -11,7 +11,7 @@ export interface DocumentPreviewCardProps {
 
 export default function DocumentPreviewCard({ document }: DocumentPreviewCardProps) {
   return (
-    <Card className="mb-4">
+    <Card>
       <CardContent>
         <CardTitle>{document.documentId}</CardTitle>
         <CardDescription>Card Description</CardDescription>

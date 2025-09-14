@@ -25,7 +25,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <QueryClientProvider client={queryClient}>
         <html lang="en">
           <body className={`${geistSans.className} ${geistMono.className} font-sans`}>
-            {children}
+            <div className="p-4">{children}</div>
             <Toaster />
           </body>
         </html>
