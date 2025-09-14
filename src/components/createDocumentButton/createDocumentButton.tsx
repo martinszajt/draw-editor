@@ -15,7 +15,11 @@ import { useState } from 'react';
 
 const routeRegex = /^[a-zA-Z0-9-_]+$/;
 
-export function CreateDocumentButton() {
+export interface EditorComponentProps {
+  onCreateDocument: (documentId: string) => Promise<boolean>;
+}
+
+export function CreateDocumentButton({ onCreateDocument }: EditorComponentProps) {
   const [fileName, setFileName] = useState<string>('');
   const [isValid, setIsValid] = useState<boolean>(true);
 
@@ -27,6 +31,10 @@ export function CreateDocumentButton() {
     } else {
       setIsValid(false);
     }
+  };
+
+  const handleConfirm = () => {
+    onCreateDocument(fileName);
   };
 
   return (
@@ -57,7 +65,7 @@ export function CreateDocumentButton() {
         </div>
         <DialogFooter className="sm:justify-start">
           <DialogClose asChild>
-            <Button disabled={!isValid} type="button" variant="secondary">
+            <Button disabled={!isValid} type="button" onClick={handleConfirm} variant="secondary">
               Create
             </Button>
           </DialogClose>

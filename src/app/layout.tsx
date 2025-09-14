@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { httpBatchLink } from '@trpc/client';
 import '../styles/globals.css';
 import { geistMono, geistSans } from '@/utils/fonts';
+import { Toaster } from 'sonner';
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   const [queryClient] = useState(() => new QueryClient());
@@ -25,6 +26,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <html lang="en">
           <body className={`${geistSans.className} ${geistMono.className} font-sans`}>
             {children}
+            <Toaster />
           </body>
         </html>
       </QueryClientProvider>

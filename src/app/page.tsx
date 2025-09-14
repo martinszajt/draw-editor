@@ -4,6 +4,7 @@ import DocumentPreviewCard from '@/components/documentPreviewCard/documentPrevie
 import { IDocument } from '@/types/trpc';
 import { CreateDocumentButton } from '@/components/createDocumentButton/createDocumentButton';
 import { useAllDocuments } from '@/hooks/useAllDocuments';
+import { useStoreDocument } from '@/hooks/useStoreDocument';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -17,9 +18,11 @@ const geistMono = Geist_Mono({
 
 export default function Home() {
   const { documents, isLoading, isError, error } = useAllDocuments();
+  const { createNewDocument } = useStoreDocument();
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error: {error?.message}</div>;
+
   return (
     <div
       className={`${geistSans.className} ${geistMono.className} font-sans min-h-screen items-center p-6`}
@@ -31,7 +34,7 @@ export default function Home() {
               return <DocumentPreviewCard key={document.documentId} document={document} />;
             })}
 
-          <CreateDocumentButton />
+          <CreateDocumentButton onCreateDocument={createNewDocument} />
         </div>
       </main>
     </div>

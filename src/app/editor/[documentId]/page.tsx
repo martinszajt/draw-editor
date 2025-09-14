@@ -16,7 +16,7 @@ export default function Home() {
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error: {error?.message}</div>;
 
-  console.log('document', document)
+  console.log('document', document);
 
   return (
     <div>
