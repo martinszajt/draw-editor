@@ -15,7 +15,7 @@ import { useCallback, useState } from 'react';
 import { IDocument } from '@/types/trpc';
 import { DocumentHeader } from './documentHeader/documentHeader';
 import { useRouter } from 'next/navigation';
-import { routes } from '@/utils/routes';
+import { APP_URL, routes } from '@/utils/routes';
 import { getRandomColor } from '@/utils/colors';
 
 const components: Partial<TLUiComponents> = {
@@ -85,7 +85,7 @@ export const EditorComponent = ({
           typeName: 'asset',
           props: {
             name: prompt,
-            src: image,
+            src: `${APP_URL}/api/proxy-image?url=${encodeURIComponent(image)}`,
             w: imageWidth,
             h: imageHeight,
             mimeType: 'image/webp',

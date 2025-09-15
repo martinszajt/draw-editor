@@ -53,6 +53,8 @@ The project uses OpenAI for image generation. Follow these steps to set it up:
 
 > **Note 2:** You can simply leave the var empty, the app will continue working without the AI feature. 
 
+> **Note 3:** In case you are not running your server on the default host/port, there is also a NEXT_PUBLIC_APP_URL var. 
+
 ## Getting Started
 
 1. **Install dependencies:**
