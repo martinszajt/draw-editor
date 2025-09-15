@@ -4,6 +4,10 @@ A modern Next.js (App Router) application for creating, editing, and managing dr
 
 Documents and data lives in server memory. that's why a limit of documents is set.
 
+![Home Page Screenshot](/screenshots/home.png)
+
+![Editor Page Screenshot](/screenshots/editor.png)
+
 ## Features
 
 - **Document Management:** Create, preview, and edit documents.
