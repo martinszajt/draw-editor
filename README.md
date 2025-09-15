@@ -2,6 +2,8 @@
 
 A modern Next.js (App Router) application for creating, editing, and managing draw documents with AI-powered image generation.
 
+Documents and data lives in server memory. that's why a limit of documents is set.
+
 ## Features
 
 - **Document Management:** Create, preview, and edit documents.
@@ -78,3 +80,27 @@ The project uses OpenAI for image generation. Follow these steps to set it up:
 - [TRPC](https://trpc.io/)
 - [React](https://react.dev/)
 - [shadcn/ui](https://ui.shadcn.com/) (UI components)
+
+## Testing API Calls
+
+This application provides tRPC endpoints to manage documents. Below is a simple guide to test them locally.
+
+### 1. Get All Documents (Query / Get)
+
+Returns a list of all documents and their snapshots.
+
+```bash
+curl -X GET http://localhost:3000/api/trpc/getAllDocuments
+```
+
+### 2. Create a new Document (Mutation / Post)
+
+Creates a new empty document. Requires a documentId.
+
+```bash
+curl -X POST http://localhost:3000/api/trpc/createDocument \
+-H "Content-Type: application/json" \
+-d '{"documentId":"your-document-id"}'
+```
+
+> **Note:** Other Body parameters may be required depending on the request you try to run

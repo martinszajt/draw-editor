@@ -1,0 +1,1 @@
+export const documentIdRegex = /^[a-zA-Z0-9-_]+$/

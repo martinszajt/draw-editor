@@ -3,6 +3,7 @@ import { router, publicProcedure } from '../trpc';
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 import { open_ai_generation } from '../services/image_generation';
+import { documentIdRegex } from '@/utils/regex';
 
 const documents = new Map<string, snapshotType | null>();
 
@@ -63,6 +64,12 @@ export const appRouter = router({
   createDocument: publicProcedure
     .input(z.object({ documentId: z.string() }))
     .mutation(async ({ input }) => {
+      if (!documentIdRegex.test(input.documentId)) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: `Document ID can only contain letters, numbers, hyphens, or underscores`,
+        });
+      }
       if (documents.size > 8) {
         throw new TRPCError({
           code: 'BAD_REQUEST',

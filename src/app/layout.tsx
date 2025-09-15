@@ -24,6 +24,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <trpc.Provider client={trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>
         <html lang="en">
+              <head>
+        <title>AI Draw</title>
+      </head>
           <body className={`${geistSans.className} ${geistMono.className} font-sans`}>
             <div className="p-4">{children}</div>
             <Toaster />

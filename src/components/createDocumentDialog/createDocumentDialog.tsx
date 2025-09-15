@@ -10,10 +10,9 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { documentIdRegex } from '@/utils/regex';
 import { FilePlus2 } from 'lucide-react';
 import { useState } from 'react';
-
-const routeRegex = /^[a-zA-Z0-9-_]+$/;
 
 export interface EditorComponentProps {
   onCreateDocument: (documentId: string) => Promise<boolean>;
@@ -26,7 +25,7 @@ export function CreateDocumentDialog({ onCreateDocument }: EditorComponentProps)
   const handleFileNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
     setFileName(newValue);
-    if (routeRegex.test(newValue) || newValue === '') {
+    if (documentIdRegex.test(newValue) || newValue === '') {
       setIsValid(true);
     } else {
       setIsValid(false);
