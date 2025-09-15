@@ -2,6 +2,7 @@ import { snapshotType } from '@/types/trpc';
 import { router, publicProcedure } from '../trpc';
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
+import { open_ai_generation } from '../services/image_generation';
 
 const documents = new Map<string, snapshotType | null>();
 
@@ -92,6 +93,26 @@ export const appRouter = router({
     });
     return docs;
   }),
+  generateImage: publicProcedure
+    .input(z.object({ prompt: z.string() }))
+    .mutation(async ({ input }) => {
+      if(!process.env.OPENAI_API_KEY){
+                throw new TRPCError({
+          code: 'UNAUTHORIZED',
+          message: `OpenAI key not set`,
+        });
+      }
+      try {
+        const image = await open_ai_generation(input.prompt);
+        return image;
+      } catch (e) {
+        console.log(e);
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: `No Caption Found`,
+        });
+      }
+    }),
 });
 
 export type AppRouter = typeof appRouter;
