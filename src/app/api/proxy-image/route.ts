@@ -1,4 +1,3 @@
-import Error from "next/error";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
@@ -22,7 +21,7 @@ export async function GET(req: NextRequest) {
     return new NextResponse(Buffer.from(arrayBuffer), {
       headers: { "Content-Type": contentType },
     });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "Server error"}, { status: 500 });
   }
 }

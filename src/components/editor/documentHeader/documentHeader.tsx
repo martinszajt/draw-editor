@@ -30,7 +30,7 @@ export const DocumentHeader = ({
           <House />
           All Files
         </Button>
-        <p className="p-2 flex items-center mr-4">
+        <p className="p-2 flex items-center mr-4 text-white">
           <File className="mr-2" />
           {document?.documentId}
         </p>
